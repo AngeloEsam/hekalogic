@@ -65,11 +65,6 @@ const Navbar: React.FC<NavbarProps> = ({ onToggleLang }) => {
                 alt="Hekalogic"
                 className="hidden md:block hekalogic-lockup-clean h-auto"
               />
-              <img
-                src="/hekalogic-symbol-black.png"
-                alt="Hekalogic"
-                className="block md:hidden w-9 h-9"
-              />
             </>
           </a>
 

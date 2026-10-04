@@ -2,19 +2,58 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { staggerContainer, fadeInUp, slideInRight } from '../lib/animations';
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import emailjs from '@emailjs/browser';
+import { contactSchema } from '../lib/validation';
+import type { FormData } from '../lib/validation';
 
 const Contact: React.FC = () => {
   const { t, isRTL } = useLanguage();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    project: '',
-    message: '',
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      name: '',
+      subject: '',
+      message: '',
+    },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
+  const onSubmit = async (data: FormData) => {
+    try {
+      setStatus('sending');
+
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+      if (!serviceId || !templateId || !publicKey) {
+        console.error("EmailJS credentials are not set in the environment variables.");
+        setStatus('error');
+        return;
+      }
+
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          name: data.name,
+          email: 'hekalogic@gmail.com',
+          title: data.subject,
+          message: data.message,
+        },
+        publicKey
+      );
+
+      setStatus('success');
+      reset();
+      setTimeout(() => setStatus('idle'), 5000);
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      setStatus('error');
+    }
   };
 
   return (
@@ -85,61 +124,50 @@ const Contact: React.FC = () => {
             viewport={{ once: true, margin: "-50px" }}
             variants={slideInRight}
           >
-            <form onSubmit={handleSubmit} className="bg-[#F9F9F9] p-8 border border-gray-200">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-2">{t.contact.namePlaceholder}</label>
-                  <input
-                    type="text"
-                    required
-                    className="w-full px-4 py-3 bg-white border border-gray-200 text-sm focus:border-black focus:ring-0 transition-colors outline-none"
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-2">{t.contact.emailPlaceholder}</label>
-                  <input
-                    type="email"
-                    required
-                    className="w-full px-4 py-3 bg-white border border-gray-200 text-sm focus:border-black focus:ring-0 transition-colors outline-none"
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  />
-                </div>
+            <form onSubmit={handleSubmit(onSubmit)} className="bg-[#F9F9F9] p-8 border border-gray-200">
+              <div className="mb-6">
+                <label className="block text-xs font-medium text-gray-700 mb-2">{t.contact.namePlaceholder}</label>
+                <input
+                  type="text"
+                  {...register('name')}
+                  className="w-full px-4 py-3 bg-white border border-gray-200 text-sm focus:border-black focus:ring-0 transition-colors outline-none"
+                />
+                {errors.name && <p className="mt-1 text-xs text-red-500">{errors.name.message}</p>}
               </div>
 
               <div className="mb-6">
                 <label className="block text-xs font-medium text-gray-700 mb-2">{t.contact.projectPlaceholder}</label>
-                <select
-                  required
-                  className="w-full px-4 py-3 bg-white border border-gray-200 text-sm focus:border-black focus:ring-0 transition-colors outline-none appearance-none"
-                  onChange={(e) => setFormData({ ...formData, project: e.target.value })}
-                >
-                  <option value="">Select an option</option>
-                  <option value="web">Web Development</option>
-                  <option value="cloud">Cloud & DevOps</option>
-                  <option value="mobile">Mobile App</option>
-                  <option value="design">UI/UX Design</option>
-                  <option value="consulting">Consulting</option>
-                  <option value="digital-transformation">Digital Transformation</option>
-                  <option value="ai-solutions">AI Solutions</option>
-                </select>
+                <input
+                  type="text"
+                  {...register('subject')}
+                  className="w-full px-4 py-3 bg-white border border-gray-200 text-sm focus:border-black focus:ring-0 transition-colors outline-none"
+                />
+                {errors.subject && <p className="mt-1 text-xs text-red-500">{errors.subject.message}</p>}
               </div>
 
               <div className="mb-8">
                 <label className="block text-xs font-medium text-gray-700 mb-2">{t.contact.messagePlaceholder}</label>
                 <textarea
-                  required
                   rows={4}
+                  {...register('message')}
                   className="w-full px-4 py-3 bg-white border border-gray-200 text-sm focus:border-black focus:ring-0 transition-colors outline-none resize-none"
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 />
+                {errors.message && <p className="mt-1 text-xs text-red-500">{errors.message.message}</p>}
               </div>
+
+              {status === 'success' && (
+                <p className="mb-4 text-sm text-green-600 font-medium">Message sent successfully!</p>
+              )}
+              {status === 'error' && (
+                <p className="mb-4 text-sm text-red-500 font-medium">Something went wrong. Please try again.</p>
+              )}
 
               <button
                 type="submit"
-                className="w-full px-8 py-4 bg-black text-white text-sm font-medium hover:bg-gray-900 transition-colors"
+                disabled={status === 'sending'}
+                className="w-full px-8 py-4 bg-black text-white text-sm font-medium hover:bg-gray-900 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                {t.contact.submit}
+                {status === 'sending' ? 'Sending…' : t.contact.submit}
               </button>
             </form>
           </motion.div>
@@ -150,3 +178,4 @@ const Contact: React.FC = () => {
 };
 
 export default Contact;
+

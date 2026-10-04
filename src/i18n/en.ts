@@ -14,7 +14,7 @@ export const en: TranslationKeys = {
     badge: 'Tech Company',
     title: 'We build the software that runs your business',
     subtitle:
-      'Hekalogic is a Cairo-based software company delivering high-quality, scalable solutions — from web applications to enterprise systems — for clients across Egypt and Saudi Arabia.',
+      'Hekalogic is a Cairo-based software company delivering high-quality, scalable solutions from web applications to enterprise systems.',
     ctaPrimary: 'Get in touch',
     ctaSecondary: 'Our Services',
     stat1Value: '5+',
@@ -148,13 +148,6 @@ export const en: TranslationKeys = {
       "Don't take our word for it — hear from the businesses we've transformed.",
     items: [
       {
-        name: 'Taheiya Team',
-        role: 'Product Director',
-        company: 'Taheiya — Saudi Arabia',
-        quote:
-          'Hekalogic delivered our platform with exceptional quality and speed. Their technical expertise and attention to detail is unmatched. Working with a Cairo-based team remotely was seamless.',
-      },
-      {
         name: 'Mohamed Salah',
         role: 'CEO',
         company: 'Cairo Tech — Egypt',
@@ -187,9 +180,9 @@ export const en: TranslationKeys = {
     messagePlaceholder: 'Tell us about your project...',
     submit: 'Send Message',
     info: {
-      email: 'hello@siyaq.com',
-      phone: '+20 10 0000 0000',
-      location: 'Maadi, Cairo, Egypt',
+      email: 'hekalogic@gmail.com',
+      phone: '+201091750668',
+      location: 'Cairo, Egypt',
     },
   },
   blog: {
@@ -226,7 +219,7 @@ export const en: TranslationKeys = {
   },
   footer: {
     description:
-      'Building the software that powers businesses across Egypt and Saudi Arabia. Based in Maadi, Cairo.',
+      'Building the software that powers businesses across Egypt and Saudi Arabia. Based in Cairo.',
     links: 'Quick Links',
     services: 'Services',
     company: 'Company',

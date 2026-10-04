@@ -4,7 +4,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Services from './components/Services';
 import Process from './components/Process';
-import CaseStudies from './components/CaseStudies';
+// import CaseStudies from './components/CaseStudies';
 import Technologies from './components/Technologies';
 import Team from './components/Team';
 import Testimonials from './components/Testimonials';
@@ -28,7 +28,7 @@ const AppContent: React.FC = () => {
         <Hero />
         <Services />
         <Process />
-        <CaseStudies />
+        {/* <CaseStudies /> */}
         <Technologies />
         <Team />
         <Testimonials />

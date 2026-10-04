@@ -33,7 +33,7 @@ const Footer: React.FC = () => {
             <div className='max-w-sm flex items-center justify-center mt-4'>
               <div className="flex items-center gap-4">
                 <a
-                  href="https://www.linkedin.com/company/siyaq-%D8%B3%D9%8A%D8%A7%D9%82/home/"
+                  href="#"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-400 hover:text-[#0a66c2] transition-colors"
@@ -88,17 +88,14 @@ const Footer: React.FC = () => {
         <div className={`mt-20 pt-8 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4 ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
           <div className="flex flex-col gap-1 text-center sm:text-left">
             <p className="text-xs text-gray-500">{t.footer.copyright}</p>
-            <p className="text-xs text-gray-400">
-              {isRTL ? 'المعادي، القاهرة، مصر · شريك تهيئة، المملكة العربية السعودية' : 'Maadi, Cairo, Egypt · Taheiya Partner, Saudi Arabia'}
-            </p>
           </div>
           <div className="flex items-center">
             <span className="text-xs text-gray-500">{isRTL ? 'صنع بواسطة ' : 'Made by'}</span>
             <a href="#home" className="flex items-center gap-2 group">
-              <img
-                src="/hekalogic-symbol-black.png"
+               <img
+                src="/hekalogic-lockup-clean.png"
                 alt="Hekalogic"
-                className="w-7 h-7"
+                className="hidden md:block hekalogic-lockup-clean h-auto"
               />
             </a>
           </div>
