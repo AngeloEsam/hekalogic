@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Arabic Font */
+.font-arabic {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f9f9f9; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1d5db; 
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af; 
+}
+/* Hekalogic brand assets */
+img[alt="Hekalogic"] {
+  display: block;
+  object-fit: contain;
+  object-position: left center;
+}
+
+/* The desktop lockup intentionally ends at "hekalogic" — no trailing H. */
+.hekalogic-lockup-clean {
+  width: 158px;
+  max-width: 158px;
+  overflow: hidden;
+}
+
+/* Hero glyphs: extracted Egyptian references, intentionally quiet and interactive. */
+.hero-glyph {
+  pointer-events: all;
+  transform-box: fill-box;
+  transform-origin: center center;
+  cursor: default;
+}
+
+.hero-glyph-image {
+  display: block;
+  opacity: 0.9;
+  filter: grayscale(1) contrast(0.82);
+  mix-blend-mode: multiply;
+  transition: filter 260ms ease, opacity 260ms ease;
+}
+
+.hero-glyph-label {
+  opacity: 0;
+  transform: translateY(-3px);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.hero-glyph:hover .hero-glyph-image {
+  opacity: 1;
+  filter: grayscale(1) contrast(1);
+}
+
+.hero-glyph:hover .hero-glyph-label {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+@media (max-width: 767px) {
+  .hero-glyph-label { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-glyph-image, .hero-glyph-label { transition: none !important; }
+}
