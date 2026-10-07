@@ -6,7 +6,7 @@ import Services from './components/Services';
 import Process from './components/Process';
 // import CaseStudies from './components/CaseStudies';
 import Technologies from './components/Technologies';
-import Team from './components/Team';
+// import Team from './components/Team';
 import Testimonials from './components/Testimonials';
 import CTA from './components/CTA';
 import Contact from './components/Contact';
@@ -30,7 +30,7 @@ const AppContent: React.FC = () => {
         <Process />
         {/* <CaseStudies /> */}
         <Technologies />
-        <Team />
+        {/* <Team /> */}
         <Testimonials />
         <CTA />
         <Blog />
